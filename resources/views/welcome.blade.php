@@ -8,6 +8,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
         <!-- Styles -->
         <style>
@@ -61,10 +62,22 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .showAll{
+                margin: 10px;
+
+            }
+
+            .treeStructure{
+                margin: 60px;
+            }
+
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+
+
+        <div class=" position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -79,9 +92,17 @@
                 </div>
             @endif
 
+                <div class="showAll">
+                    <button class="btn btn-primary" onclick="rozwin()" style="height: 50px; weigth: 150px">Show all tree</button>
+                </div>
 
 
-                <div id="jstree">
+
+
+                <div id="jstree" class="treeStructure">
+                    @if($categories === null)
+                        <p>Something wrong</p>
+                    @else
                     <ul>
                         @foreach($categories as $category)
                             <li>
@@ -92,6 +113,7 @@
                             </li>
                         @endforeach
                     </ul>
+                    @endif
                 </div>
 
 
@@ -108,7 +130,17 @@
 
         <script>
 
+            var rozwiniete = 0;
 
+            function rozwin(){
+                if (rozwiniete == 0){
+                    rozwiniete = 1;
+                    $('#jstree').jstree('open_all');
+                } else {
+                    rozwiniete = 0;
+                    $('#jstree').jstree('close_all');
+                }
+            }
 
             $(function () {
                 // 6 create an instance when the DOM is ready
