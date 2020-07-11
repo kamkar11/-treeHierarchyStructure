@@ -6,8 +6,8 @@
 
         <title>Laravel</title>
 
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
         <!-- Styles -->
         <style>
@@ -79,22 +79,42 @@
                 </div>
             @endif
 
+
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div id="jstree">
+                    <ul>
+                        <li>tak
+                            <ul>
+                                <li>dok</li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+
             </div>
         </div>
+
+
+
+        <!-- 4 include the jQuery library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <!-- 5 include the minified jstree source -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+
+        <script>
+
+
+
+            $(function () {
+                // 6 create an instance when the DOM is ready
+                $('#jstree').jstree({
+
+                });
+
+            });
+        </script>
+
     </body>
 </html>
