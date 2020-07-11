@@ -72,6 +72,10 @@
                 margin: 60px;
             }
 
+            .searchElem{
+                margin-left: 160px;
+            }
+
         </style>
     </head>
     <body>
@@ -96,6 +100,10 @@
                     <button class="btn btn-primary" onclick="rozwin()" style="height: 50px; weigth: 150px">Show all tree</button>
                 </div>
 
+                <div  class="form-group searchElem col-md-2" >
+                    <input type="text" id="search" class="form-control" name="search" value="" autocomplete="off" spellcheck="false"><br/>
+                    <button  class="btn btn-warning" type="button" id="searchButton"  onclick="przeszukajDrzewo(); return false;">Search in tree</button>
+                </div>
 
 
 
@@ -115,16 +123,10 @@
                     </ul>
                     @endif
                 </div>
-
-
-
         </div>
 
 
-
-        <!-- 4 include the jQuery library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-        <!-- 5 include the minified jstree source -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
 
@@ -142,10 +144,21 @@
                 }
             }
 
+            function przeszukajDrzewo(){
+                var wartosc = document.getElementById("search").value;
+                $('#jstree').jstree(true).search(wartosc);
+            }
+
+            document.getElementById("search").addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13){
+                    document.getElementById("searchButton").click();
+                }
+            });
+
             $(function () {
-                // 6 create an instance when the DOM is ready
                 $('#jstree').jstree({
-                    'plugins' : ["sort"]
+                    'plugins' : ["sort","search"]
                 });
 
             });
