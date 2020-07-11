@@ -12,7 +12,8 @@
             <div class="col-md-3">
                 <div class="col-md-12" >
                     <a  href="{{ route('category.create') }}">Create Category</a><br/>
-                    <a href="{{ route('category.updateName') }}">Update Name Category</a><br/><br/>
+                    <a href="{{ route('category.updateName') }}">Update Name Category</a><br/>
+                    <a  href="{{ route('category.moveNode') }}">Move Node Category</a><br/><br/>
                     <a href="/" >See tree</a>
                 </div>
             </div>

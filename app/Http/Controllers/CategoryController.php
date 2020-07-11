@@ -8,15 +8,7 @@ use DB;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+
 
     public function treeview()
     {
@@ -67,6 +59,7 @@ class CategoryController extends Controller
 
             return redirect()->route('category.create')
                 ->with('success','Category Created Successfully');
+
         } catch (\Throwable $th){
             return redirect()->route('category.create')
                 ->with('error','Something wrong');
@@ -118,48 +111,62 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
+    public function moveNode()
     {
-        //
+        $categories = Category::latest()->get();
+
+        return view('category.moveNode', compact('categories'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+
+    public function moveNodeStorage(Request $request)
     {
-        //
+        try {
+
+            $movedNodeId = $request->movedNode;
+            $newParentId = $request->destinationPlace;
+
+            // check the same node
+            if (($movedNodeId) === ($newParentId)) {
+                return redirect()->route('category.moveNode')
+                    ->with('error', 'Nie możesz przenieść do tego samego miejsca');
+            }
+
+            // Checking if he does not transfer to his ancestor
+            $selectToMoveNode = Category::find($movedNodeId);
+            $descendants = $selectToMoveNode->descendants()->pluck('id');
+            $descendantsIdArray = $descendants->toArray();
+
+            if (in_array($newParentId, $descendantsIdArray)) {
+                return redirect()->route('category.moveNode')
+                    ->with('error', 'Miejsce docelowe jest przodkiem zaznaczonego');
+            }
+
+            // moving
+            $selectedNode = Category::find($movedNodeId);
+            $destNode = Category::find($newParentId);
+
+            $selectedNode->parent_id = $destNode->id;
+
+            // checking if he save and moved
+            if ($selectedNode->save()) {
+                $moved = $selectedNode->hasMoved();
+                if ($moved === true) {
+                    return redirect()->route('category.moveNode')
+                        ->with('success', 'Category Moved Successfully');
+                } else {
+                    return redirect()->route('category.moveNode')
+                        ->with('error', 'Something wrong');
+                }
+            }
+
+
+        } catch (\Throwable $th){
+            return redirect()->route('category.moveNode')
+                ->with('error','Something wrong');
+        }
+
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
-    }
 }

@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/updateName', 'CategoryController@updateName')->name('category.updateName');
     Route::post('/updateNameStore', 'CategoryController@updateNameStore')->name('category.updateNameStore');
+
+    Route::get('/moveNode', 'CategoryController@moveNode')->name('category.moveNode');
+    Route::post('/moveNodeStorage', 'CategoryController@moveNodeStorage')->name('category.moveNodeStorage');
 });
 
 
