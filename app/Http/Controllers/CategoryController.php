@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -72,6 +73,49 @@ class CategoryController extends Controller
         }
 
 
+    }
+
+    public function updateName()
+    {
+        $categories = Category::latest()->get();
+
+        return view('category.updateName', compact('categories'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function updateNameStore(Request $request)
+    {
+        try {
+
+        $nodes = Category::all()->pluck( 'name');
+        $namesInArray = $nodes->toArray();
+
+        if (in_array($request->category, $namesInArray )){
+            return redirect()->route('category.updateName')
+                ->with('error','This name exist in tree');
+        }
+
+        if ($request->category){
+            $data = array();
+            $data['name'] = $request->category;
+
+            $category = DB::table('categories')->where('id',$request->parent)->update($data);
+        }
+
+
+        return redirect()->route('category.updateName')
+            ->with('success','Category Name Updated  Successfully');
+
+        } catch (\Throwable $th){
+            return redirect()->route('category.updateName')
+                ->with('error','Something wrong');
+        }
     }
 
     /**

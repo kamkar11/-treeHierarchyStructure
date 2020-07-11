@@ -32,20 +32,20 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        Category Create
+                        Category Name Update
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('category.store') }}" method="post">
+                        <form action="{{ route('category.updateNameStore') }}" method="post">
                             @csrf
                             <div class="form-group row">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('New Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="category" type="text" class="form-control" name="category" value="{{ old('category') }}" required autofocus>
+
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="parent" class="col-md-4 col-form-label text-md-right">
                                     {{ __('Parent Category') }}
@@ -53,7 +53,7 @@
 
                                 <div class="col-md-6">
                                     <select id="parent" class="form-control" name="parent" value="{{ old('parent') }}"  autofocus>
-                                        <option value="none">No any parents</option>
+
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">
                                                 {{ $category->name }}
@@ -65,8 +65,8 @@
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Save Category') }}
+                                    <button type="submit" onclick=" return confirm('This Node will be update name. Are you sure !?')" class="btn btn-primary">
+                                        {{ __('Update Name Category') }}
                                     </button>
                                 </div>
                             </div>
@@ -82,7 +82,6 @@
 
 
     </div>
-
 
 
 @endsection

@@ -22,9 +22,16 @@ Auth::routes();
 Route::get('/', 'CategoryController@treeview')->name('treeview');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/category', 'CategoryController@create')->name('category.create');
+    Route::post('/store', 'CategoryController@store')->name('category.store');
 
-Route::get('/category', 'CategoryController@create')->name('category.create');
-Route::post('/store', 'CategoryController@store')->name('category.store');
+    Route::get('/updateName', 'CategoryController@updateName')->name('category.updateName');
+    Route::post('/updateNameStore', 'CategoryController@updateNameStore')->name('category.updateNameStore');
+});
+
+
+
 
 
 
