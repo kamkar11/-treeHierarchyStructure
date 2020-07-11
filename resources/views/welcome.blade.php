@@ -80,19 +80,22 @@
             @endif
 
 
-            <div class="content">
+
                 <div id="jstree">
                     <ul>
-                        <li>tak
-                            <ul>
-                                <li>dok</li>
-                            </ul>
-                        </li>
+                        @foreach($categories as $category)
+                            <li>
+                                {{ $category->name }}
+                                @if(count($category->children))
+                                    @include('manageChild',['childs' => $category->children])
+                                @endif
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
 
 
-            </div>
+
         </div>
 
 

@@ -17,6 +17,13 @@ class CategoryController extends Controller
         //
     }
 
+    public function treeview()
+    {
+        $categories = Category::get()->toTree();
+
+        return view('welcome', compact('categories'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
