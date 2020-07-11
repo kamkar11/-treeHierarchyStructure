@@ -113,7 +113,7 @@
             $(function () {
                 // 6 create an instance when the DOM is ready
                 $('#jstree').jstree({
-
+                    'plugins' : ["sort"]
                 });
 
             });
