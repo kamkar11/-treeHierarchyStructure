@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                        <a href="/">See tree</a><br/>
+                        <a href="{{ route('category.create') }}">Create Category</a><br/>
                 </div>
             </div>
         </div>

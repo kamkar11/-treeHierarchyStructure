@@ -31,7 +31,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::latest()->get();
+
+        return view('category.create', compact('categories'));
     }
 
     /**
@@ -42,7 +44,34 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $nodes = Category::all()->pluck( 'name');
+            $namesInArray = $nodes->toArray();
+
+            if (in_array($request->category, $namesInArray )){
+                return redirect()->route('category.create')
+                    ->with('error','This name exist in tree');
+            }
+
+            $category = Category::create([
+                'name' => $request->category
+            ]);
+
+            if($request->parent && $request->parent !== 'none') {
+
+                $node = Category::find($request->parent);
+
+                $node->appendNode($category);
+            }
+
+            return redirect()->route('category.create')
+                ->with('success','Category Created Successfully');
+        } catch (\Throwable $th){
+            return redirect()->route('category.create')
+                ->with('error','Something wrong');
+        }
+
+
     }
 
     /**
