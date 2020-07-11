@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/moveNode', 'CategoryController@moveNode')->name('category.moveNode');
     Route::post('/moveNodeStorage', 'CategoryController@moveNodeStorage')->name('category.moveNodeStorage');
+
+    Route::get('/deleteNode', 'CategoryController@delete')->name('category.delete');
+    Route::post('/deleteNodeStorage', 'CategoryController@deleteNode')->name('category.deleteNode');
 });
 
 

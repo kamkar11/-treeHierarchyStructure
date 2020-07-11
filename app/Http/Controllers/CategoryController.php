@@ -169,4 +169,38 @@ class CategoryController extends Controller
 
     }
 
+
+    public function delete()
+    {
+        $categories = Category::latest()->get();
+
+        return view('category.delete', compact('categories'));
+    }
+
+    public function deleteNode(Request $request)
+    {
+
+        try {
+
+
+            if ($request->parent && $request->parent !== 'none') {
+
+                $node = Category::find($request->parent);
+
+                $node->delete();
+
+                // fix values left right
+                Category::fixTree();
+            }
+
+            return redirect()->route('category.delete')
+                ->with('success', 'Category with all Node Delete Successfully');
+
+        } catch (\Throwable $th){
+            return redirect()->route('category.delete')
+                ->with('error','Something wrong');
+        }
+
+    }
+
 }
